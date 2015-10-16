@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Don\'t Forget</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_settings_Help">Help</string>
+
+    <string name="create_text">Create Note</string>
+    <string name="edit_message">Don\'t forget...</string>
+    <string name="button_save">REMEMBER</string>
+    <string name="button_see_notes">SEE OTHERS</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_display_notes">Don\'t Forget..</string>
+
+    <string name="add_more_notes">Add More Notes + </string>
+    <string name="delete_notes">DELETE ALL! </string>
+    <string name="title_activity_add_notes">AddNotesActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>
