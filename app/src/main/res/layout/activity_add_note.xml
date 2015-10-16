@@ -23,7 +23,8 @@
         <EditText
             android:id="@+id/edit_message"
             android:hint="@string/edit_message"
-            android:imeOptions="actionDone"
+
+            android:singleLine="true"
 
             android:layout_weight="0.8"
             android:layout_width="0dp"

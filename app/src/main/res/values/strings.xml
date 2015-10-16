@@ -12,7 +12,8 @@
     <string name="title_activity_display_notes">Don\'t Forget..</string>
 
     <string name="add_more_notes">Add More Notes + </string>
-    <string name="delete_notes">DELETE ALL! </string>
+    <string name="delete_all_notes">Delete ALL! </string>
+    <string name="delete_one_note">Delete Item</string>>
     <string name="title_activity_add_notes">AddNotesActivity</string>
 
     <string name="hello_world">Hello world!</string>

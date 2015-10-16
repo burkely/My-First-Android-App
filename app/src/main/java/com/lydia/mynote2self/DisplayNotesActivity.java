@@ -66,6 +66,10 @@ public class DisplayNotesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.deleteOne:
+                deleteItem();
+                break;
+
             case R.id.deleteAll:
                 deleteAll();
                 break;
@@ -78,64 +82,76 @@ public class DisplayNotesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Called when the user clicks the Delete button
 
-    public void deleteNotes(View view) {
-        //clear prefs
-        SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
-                Context.MODE_PRIVATE);
-        prefs.edit().clear().commit();
 
-        //clear our current list
-        MainApp myApplication = (MainApp) getApplicationContext();
-        myApplication.clearList();
+    public void deleteItem() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
 
-        ListView listView1 = (ListView) findViewById(R.id.listView1);
-        listView1.setAdapter(null);
+        // set title
+        alertDialogBuilder.setTitle("Delete List Item");
 
-    }
-}*/
+        alertDialogBuilder
+                .setMessage("To Delete one list item at a time:  tap it three times")
+                //sets whether this dialog is cancelable with the back button
+                .setCancelable(true)
+                .setPositiveButton("Okay, got it", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked: clear dialog
+                        dialog.cancel();
+
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    } //end of deleteItem()
+
 
     public void deleteAll() {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                    context);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
 
-            // set title
-            alertDialogBuilder.setTitle("HOLD UP!");
+        // set title
+        alertDialogBuilder.setTitle("HOLD UP!");
 
-            // set dialog message
-            alertDialogBuilder
-                    .setMessage("Are you SURE you want to delete all of these important notes?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes, definitely", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // if this button is clicked
-                            SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
-                                    Context.MODE_PRIVATE);
-                            prefs.edit().clear().commit();
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Are you SURE you want to delete all of these important notes?")
+                //sets whether this dialog is cancelable with the back button
+                .setCancelable(false)
+                .setPositiveButton("Yes, definitely", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked: clear prefs
+                        SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
+                                Context.MODE_PRIVATE);
+                        prefs.edit().clear().commit();
 
-                            //clear our current list
-                            MainApp myApplication = (MainApp) getApplicationContext();
-                            myApplication.clearList();
+                        //clear our current list
+                        MainApp myApplication = (MainApp) getApplicationContext();
+                        myApplication.clearList();
 
-                            ListView listView1 = (ListView) findViewById(R.id.listView1);
-                            listView1.setAdapter(null);
+                        ListView listView1 = (ListView) findViewById(R.id.listView1);
+                        listView1.setAdapter(null);
 
-                        }
-                    })
-                    .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                            dialog.cancel();
-                        }
-                    });
+                    }
+                })
+                .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
 
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
 
-            // show it
-            alertDialog.show();
-        }
-}
+        // show it
+        alertDialog.show();
+    } //end of deleteAll()
+
+} // end of class

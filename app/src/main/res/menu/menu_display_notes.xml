@@ -10,8 +10,14 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/deleteOne"
+        android:title="Delete Item"
+        android:orderInCategory="80"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/deleteAll"
-        android:title="@string/delete_notes"
+        android:title="@string/delete_all_notes"
         android:icon="@mipmap/delete_notes"
         android:orderInCategory="90"
         app:showAsAction="never" />
