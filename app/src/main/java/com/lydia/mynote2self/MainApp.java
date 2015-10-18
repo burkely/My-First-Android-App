@@ -46,10 +46,17 @@ public class MainApp extends Application {
     }
 
     public void clearList(){
+        //clear note array
         noteEntries.clear();
+
+        // clear prefs
+        SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
+                Context.MODE_PRIVATE);
+        prefs.edit().clear().commit();
     }
 
     public void clearItem(int index){
+
         //remove from Note Array
         noteEntries.remove(index);
 

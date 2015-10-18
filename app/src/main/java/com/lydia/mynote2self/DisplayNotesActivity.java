@@ -161,12 +161,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes, definitely", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked: clear prefs
-                        SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
-                                Context.MODE_PRIVATE);
-                        prefs.edit().clear().commit();
-
-                        //clear our current list
+                        //clear our current list & prefs
                         MainApp myApplication = (MainApp) getApplicationContext();
                         myApplication.clearList();
 
