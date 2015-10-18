@@ -17,11 +17,11 @@ public class MainApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //This is where we read current SP and populate our list of notes
         //To read or write to SharedPreferences you first need to get/create SharedPrefs
         SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
                 Context.MODE_PRIVATE);
 
+        //This is where we read current SP and populate our list of notes
         Map<String, ?> entryMap = prefs.getAll();
 
         int keyCount = 0;
@@ -39,9 +39,7 @@ public class MainApp extends Application {
 
     }
 
-    public void addNote(String note) {
-        noteEntries.add(note);
-    }
+    public void addNote(String note) {noteEntries.add(note);}
 
     public ArrayList<String> getEntryList(){
         return noteEntries;
@@ -49,6 +47,19 @@ public class MainApp extends Application {
 
     public void clearList(){
         noteEntries.clear();
+    }
+
+    public void clearItem(int index){
+        //remove from Note Array
+        noteEntries.remove(index);
+
+        String KEY = Integer.toString(index);
+
+        //To read or write to SharedPreferences you first need to get/create SharedPrefs
+        SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
+                Context.MODE_PRIVATE);
+        prefs.edit().remove(KEY).commit();
+
     }
 
 }

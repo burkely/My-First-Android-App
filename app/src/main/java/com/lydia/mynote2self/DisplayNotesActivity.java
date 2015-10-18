@@ -40,35 +40,30 @@ public class DisplayNotesActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.home_icon);
 
         //access notes and methods from our globalApp Class
-        MainApp myApplication = (MainApp) getApplicationContext();
+        final MainApp myApplication = (MainApp) getApplicationContext();
 
-        ArrayList<String> NOTES = new ArrayList<String>(myApplication.getEntryList());
-
-        //simple list item 1 = Android predefined TextView resource id
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, NOTES);
+        //populate adapater with our shared array in MainApp
+        //NOTE: simple list item 1 = Android predefined TextView resource id
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myApplication.getEntryList());
 
         ListView listView1 = (ListView) findViewById(R.id.listView1);
         listView1.setAdapter(adapter);
 
         listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> a, View v, final int position, long id) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
 
                 adb.setTitle("Delete Item?");
 
-                adb.setMessage("Are you sure you want to delete pos " + position +
-                        "id " + id);
-
-                //position gives position of view in adapter
-                final int positionToRemove = position;
+                adb.setMessage("Are you sure you want to delete this note? ");
 
                 adb.setNegativeButton("Cancel", null);
 
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
-                        //remove from array and shared prefs here
-                        //MyDataObject.remove(positionToRemove);
+                        //position gives position of view in adapter
+                        final int index = position;
+                        myApplication.clearItem(index);
 
                         //repopulate listview adpater with item removed
                         adapter.notifyDataSetChanged();
@@ -87,7 +82,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
                 should not be propagated to the other Views in the tree; when you
                 return false - you let
                 the event be passed to the other Views that may consume it.**/
-                
+
                 return true;
             }
         });
