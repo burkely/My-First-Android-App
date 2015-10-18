@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,7 +29,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_notes);
 
-            //disable the app icon as the Up button
+            //disable the app icon as the Up (back) button
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //get rid of the title
@@ -48,6 +49,48 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
         ListView listView1 = (ListView) findViewById(R.id.listView1);
         listView1.setAdapter(adapter);
+
+        listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
+
+                adb.setTitle("Delete Item?");
+
+                adb.setMessage("Are you sure you want to delete pos " + position +
+                        "id " + id);
+
+                //position gives position of view in adapter
+                final int positionToRemove = position;
+
+                adb.setNegativeButton("Cancel", null);
+
+                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //remove from array and shared prefs here
+                        //MyDataObject.remove(positionToRemove);
+
+                        //repopulate listview adpater with item removed
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                // create alert dialog
+                AlertDialog alertDialog = adb.create();
+
+                // show it
+                alertDialog.show();
+
+                /**the View hierarchy in Android is represented by a tree. When you
+                return true from the onItemLongClick() - it means that the View that
+                currently received the event is the true event receiver and the event
+                should not be propagated to the other Views in the tree; when you
+                return false - you let
+                the event be passed to the other Views that may consume it.**/
+                
+                return true;
+            }
+        });
 
     }
 
@@ -85,27 +128,25 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
 
     public void deleteItem() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         // set title
         alertDialogBuilder.setTitle("Delete List Item");
 
         alertDialogBuilder
-                .setMessage("To Delete one list item at a time:  tap it three times")
+                //set dialog message
+                .setMessage("Tap and hold to Delete one list item at a time")
                 //sets whether this dialog is cancelable with the back button
                 .setCancelable(true)
                 .setPositiveButton("Okay, got it", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked: clear dialog
+                        // if this button is clicked: clear alert dialog
                         dialog.cancel();
-
                     }
                 });
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
         // show it
         alertDialog.show();
     } //end of deleteItem()
@@ -115,11 +156,11 @@ public class DisplayNotesActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
-        // set title
+        // set title of alert
         alertDialogBuilder.setTitle("HOLD UP!");
 
-        // set dialog message
         alertDialogBuilder
+                // set dialog message
                 .setMessage("Are you SURE you want to delete all of these important notes?")
                 //sets whether this dialog is cancelable with the back button
                 .setCancelable(false)
@@ -136,7 +177,6 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
                         ListView listView1 = (ListView) findViewById(R.id.listView1);
                         listView1.setAdapter(null);
-
                     }
                 })
                 .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
@@ -149,7 +189,6 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
         // show it
         alertDialog.show();
     } //end of deleteAll()
