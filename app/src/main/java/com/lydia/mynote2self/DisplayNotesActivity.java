@@ -23,6 +23,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter;
     final Context context = this;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,10 @@ public class DisplayNotesActivity extends AppCompatActivity {
         //NOTE: simple list item 1 = Android predefined TextView resource id
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myApplication.getEntryList());
 
-        ListView listView1 = (ListView) findViewById(R.id.listView1);
-        listView1.setAdapter(adapter);
+        lv = (ListView) findViewById(R.id.listView1);
+        lv.setAdapter(adapter);
 
-        listView1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> a, View v, final int position, long id) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
 
@@ -61,12 +62,14 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //position gives position of view in adapter
+                        //position gives position of item view in adapter, will happen to  equal id also as the first row is also the first item in the list view
                         final int index = position;
                         myApplication.clearItem(index);
 
                         //repopulate listview adpater with item removed
                         adapter.notifyDataSetChanged();
+
+
                     }
                 });
 
@@ -105,7 +108,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.deleteOne:
-                deleteItem();
+                howToDeleteItem();
                 break;
 
             case R.id.deleteAll:
@@ -122,7 +125,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
 
 
-    public void deleteItem() {
+    public void howToDeleteItem() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         // set title

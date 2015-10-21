@@ -17,7 +17,8 @@
             android:listSelector="#1E052E88"
             android:divider="#10000690"
             android:dividerHeight="0.1px"
-        />
+            android:choiceMode="singleChoice"
+            />
 
     </LinearLayout>
 

@@ -57,19 +57,16 @@ public class AddNoteActivity extends AppCompatActivity {
      * Called when the user clicks the Save button
      */
     public void saveMessage(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
         //get message entered by finding EditText element ID
         EditText saveText = (EditText) findViewById(R.id.edit_message);
 
         //Assign the text to a local message variable
-        String newNote = saveText.getText().toString();
+        String newNote = saveText.getText().toString().trim();
 
         //clear the input for more notes
         saveText.getText().clear();
 
-        if (newNote!=""&&newNote!=" ") {
+        if ((newNote.length() != 0) && (newNote != " ")) {
             //find/create our SP where our notes are saved/will be saved
             SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
                     Context.MODE_PRIVATE);
@@ -80,7 +77,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
             KEY = Integer.toString(intKey);
             /*once you have the SharedPreferences you can write to them*/
-            prefs.edit().putString(KEY, (newNote)).apply();
+            prefs.edit().putString(KEY, (newNote)).commit();
 
             //and we add to our list so we dont have to access/load SP moving between activities
             MainApp myApplication = (MainApp) getApplicationContext();

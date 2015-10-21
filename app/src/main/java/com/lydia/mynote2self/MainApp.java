@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 public class MainApp extends Application {
@@ -52,7 +54,8 @@ public class MainApp extends Application {
         // clear prefs
         SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
                 Context.MODE_PRIVATE);
-        prefs.edit().clear().commit();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear().commit();
     }
 
     public void clearItem(int index){
@@ -65,8 +68,17 @@ public class MainApp extends Application {
         //To read or write to SharedPreferences you first need to get/create SharedPrefs
         SharedPreferences prefs = getSharedPreferences("com.example.notetoself.notes",
                 Context.MODE_PRIVATE);
-        prefs.edit().remove(KEY).commit();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear().commit();
 
+        // now push our new array into cleared prefs
+        int keyCount = 0;
+        while (keyCount<noteEntries.size()) {
+            KEY = Integer.toString(keyCount);
+            editor.putString(KEY, noteEntries.get(keyCount));
+            editor.commit();
+            keyCount++;
+        }
     }
 
 }
