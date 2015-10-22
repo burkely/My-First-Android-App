@@ -21,7 +21,7 @@
         <activity
             android:name=".DisplayNotesActivity"
             android:label="@string/title_activity_display_notes"
-            android:parentActivityName=".AddNoteActivity" >
+            android:parentActivityName=".AddNoteActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="AddNoteActivity" />

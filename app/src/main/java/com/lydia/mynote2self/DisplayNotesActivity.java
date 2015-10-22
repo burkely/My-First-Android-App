@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> adapter;
     final Context context = this;
+
     ListView lv;
 
     @Override
@@ -42,7 +44,6 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
         //access notes and methods from our globalApp Class
         final MainApp myApplication = (MainApp) getApplicationContext();
-
         //populate adapater with our shared array in MainApp
         //NOTE: simple list item 1 = Android predefined TextView resource id
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myApplication.getEntryList());
@@ -91,6 +92,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
