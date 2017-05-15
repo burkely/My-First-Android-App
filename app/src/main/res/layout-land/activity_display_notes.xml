@@ -18,9 +18,7 @@
             android:listSelector="#1E052E88"
             android:divider="#10000690"
             android:dividerHeight="0.1px"
-            android:choiceMode="singleChoice"
-
-            />
+            android:choiceMode="singleChoice" />
     </LinearLayout>
 
     <LinearLayout
@@ -28,8 +26,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.12"
         android:padding="0dp"
-        android:background="@color/bottomBar"
-        >
+        android:background="@color/bottom_bar_blue">
     </LinearLayout>
 
 </LinearLayout>

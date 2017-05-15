@@ -8,7 +8,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by Lydia on 14/05/2017.
@@ -34,17 +34,47 @@ public class SplashScreen extends Activity {
     }
 
     private void StartAnimations() {
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.fade);
+        /*Animation anim = AnimationUtils.loadAnimation(this, R.anim.fade_text_splash);
         anim.reset();
         LinearLayout l =(LinearLayout) findViewById(R.id.lin_lay);
         l.clearAnimation();
         l.startAnimation(anim);
+        */
 
-        anim = AnimationUtils.loadAnimation(this, R.anim.scale_logo);
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.scale_logo_splash);
         anim.reset();
         ImageView iv = (ImageView) findViewById(R.id.splash);
         iv.clearAnimation();
         iv.startAnimation(anim);
+
+        anim = AnimationUtils.loadAnimation(this, R.anim.fade_text_splash);
+
+
+        Animation.AnimationListener listener = new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Intent i = new Intent();
+                i.setClass(MainActivity.this, P2.class);
+                startActivity(i);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        };
+
+        anim.reset();
+        TextView tv = (TextView) findViewById(R.id.made_by);
+        tv.clearAnimation();
+        tv.startAnimation(anim);
+
+
+
 
         splashTread = new Thread() {
             @Override

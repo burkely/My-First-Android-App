@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- A container that holds other animation elements (<objectAnimator>,
+<valueAnimator>, or other <set> elements). Represents an AnimatorSet.
+You can specify nested <set> tags to further group animations together.
+Each <set> can define its own ordering attribute.
+don't actually need it below w/1 item -->
+
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+
+    <scale
+        android:fromXScale="0.1"
+        android:toXScale="1.0"
+        android:fromYScale="0.1"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="2700"
+        android:interpolator="@android:anim/bounce_interpolator"/>
+
+    <alpha
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fromAlpha="0.1"
+        android:toAlpha="1.0"
+        android:duration="2200" />
+
+    <alpha
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:startOffset="3000"
+        android:fromAlpha="1.0"
+        android:toAlpha="1.0"
+        android:duration="5000" />
+
+</set>

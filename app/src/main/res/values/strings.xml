@@ -15,7 +15,7 @@
     <string name="delete_all_notes">Delete ALL! </string>
     <string name="delete_one_note">Delete Item</string>>
     <string name="title_activity_add_notes">AddNotesActivity</string>
-
-    <string name="hello_world">Hello world!</string>
-
+    
+    <string name="made_by">Designed &amp; Engineered by Lydia Burke</string>
+   
 </resources>
