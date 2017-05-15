@@ -18,6 +18,7 @@
             android:divider="#10000690"
             android:dividerHeight="0.1px"
             android:choiceMode="singleChoice"
+
             />
     </LinearLayout>
 

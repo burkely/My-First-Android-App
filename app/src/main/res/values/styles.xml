@@ -10,21 +10,26 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionButtonStyle">@style/MyActionButton</item>
         <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:textViewStyle">@style/TextStyle</item>
 
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="actionButtonStyle">@style/MyActionButton</item>
         <item name="editTextStyle">@style/EditTextStyle</item>
-
         <item name="colorAccent">@color/edittext_line</item>
     </style>
 
-    <!-- TextView/font Style -->
+    <!-- EditText/font Style -->
     <style name="EditTextStyle" parent="android:Widget.EditText">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <!-- Text/font Style -->
+    <style name="TextStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <!-- Action Button Style -->
     <style name="MyActionButton" parent="Widget.AppCompat.Light.ActionButton">

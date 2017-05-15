@@ -47,7 +47,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            goToNotes();
         }
 
         return super.onOptionsItemSelected(item);
@@ -90,6 +90,12 @@ public class AddNoteActivity extends AppCompatActivity {
      */
     public void seeNotes(View view) {
         // Do something in response to button
+        Intent intent = new Intent(this, DisplayNotesActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void goToNotes( ){
         Intent intent = new Intent(this, DisplayNotesActivity.class);
         startActivity(intent);
     }

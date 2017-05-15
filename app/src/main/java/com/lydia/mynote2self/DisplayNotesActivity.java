@@ -25,6 +25,8 @@ public class DisplayNotesActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     final Context context = this;
 
+
+
     ListView lv;
 
     @Override
@@ -44,6 +46,7 @@ public class DisplayNotesActivity extends AppCompatActivity {
 
         //access notes and methods from our globalApp Class
         final MainApp myApplication = (MainApp) getApplicationContext();
+
         //populate adapater with our shared array in MainApp
         //NOTE: simple list item 1 = Android predefined TextView resource id
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myApplication.getEntryList());
@@ -120,6 +123,10 @@ public class DisplayNotesActivity extends AppCompatActivity {
             case R.id.add_note:
                 NavUtils.navigateUpFromSameTask(this);
                 break;
+
+            case R.id.action_settings:
+                settings();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -187,5 +194,157 @@ public class DisplayNotesActivity extends AppCompatActivity {
         // show it
         alertDialog.show();
     } //end of deleteAll()
+
+
+
+    public void settings() {
+
+        CharSequence options[] = new CharSequence[] {"\nAdjust Font Size","Order Notes"};
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title of alert
+        alertDialogBuilder.setTitle("Settings");
+
+        alertDialogBuilder
+                 //sets whether this dialog is cancelable with the back button
+                .setCancelable(true)
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //which is which of the options user chose
+
+                        switch (which) {
+                            //if they chose adjust font size
+                            case 0:
+                                adjustFont();
+                                break;
+
+                            case 1:
+                                //user chose to reorder notes
+                                order();
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                } //end of settings()
+
+
+    public void adjustFont(){
+        CharSequence fontOptions[] = new CharSequence[] {"\nSmall","Medium", "Large"};
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title of alert
+        alertDialogBuilder.setTitle("Font Settings");
+
+        alertDialogBuilder
+                //sets whether this dialog is cancelable with the back button
+                .setCancelable(true)
+                .setItems(fontOptions, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //which is which of the options user chose
+
+                        switch (which) {
+                            //if they chose smallt size
+                            case 0:
+                                //change font to 14sp
+                                break;
+
+                            case 1:
+                                //user chose medium
+                                //change font to 17/18
+                                break;
+
+                            case 2:
+                                //user chose large
+                                //change font to 22/22 sp
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    } //end of adjustFont()
+
+
+    public void order(){
+        //access notes and methods from our globalApp Class
+        final MainApp myApplication = (MainApp) getApplicationContext();
+        final int state = myApplication.getOrderState();
+
+        CharSequence orderOptions[] = new CharSequence[] {"\nNew to Old","Old to New"};
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title of alert
+        alertDialogBuilder.setTitle("Note Settings");
+
+        alertDialogBuilder
+                //sets whether this dialog is cancelable with the back button
+                .setCancelable(true)
+                .setItems(orderOptions, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //which is which of the options user chose
+
+                        switch (which) {
+                            //new to old
+                            case 0:
+                                //if curretnly ordered old to new, reorder
+                                if(state==0){
+                                 myApplication.reOrder(state);
+                                 adapter.notifyDataSetChanged();
+                                 }
+                                 //else do nothing as its in the right order already!
+                                 break;
+
+                            case 1:
+                                //user old to new
+                                if(state==1){
+                                 myApplication.reOrder(state);
+                                    adapter.notifyDataSetChanged();
+                                 }
+                                break;
+
+                        }
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
 
 } // end of class
