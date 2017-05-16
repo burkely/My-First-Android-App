@@ -50,23 +50,25 @@ public class SplashScreen extends Activity {
         anim = AnimationUtils.loadAnimation(this, R.anim.fade_text_splash);
 
 
-        Animation.AnimationListener listener = new Animation.AnimationListener() {
+        anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Intent i = new Intent();
-                i.setClass(MainActivity.this, P2.class);
-                startActivity(i);
+                Intent intent = new Intent(SplashScreen.this,
+                        AddNoteActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                SplashScreen.this.finish();
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
 
             }
-        };
+        });
 
         anim.reset();
         TextView tv = (TextView) findViewById(R.id.made_by);
@@ -75,14 +77,14 @@ public class SplashScreen extends Activity {
 
 
 
-
+/*
         splashTread = new Thread() {
             @Override
             public void run() {
                 try {
                     int waited = 0;
                     // Splash screen pause time
-                    while (waited < 3500) {
+                    while (waited < 7500) {
                         sleep(100);
                         waited += 100;
                     }
@@ -102,6 +104,6 @@ public class SplashScreen extends Activity {
 
         splashTread.start();
 
+*/
     }
-
 }
