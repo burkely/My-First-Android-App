@@ -23,6 +23,8 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
+        //disable the app icon as the Up (back) button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //get rid of the title
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

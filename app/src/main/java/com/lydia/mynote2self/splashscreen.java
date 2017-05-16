@@ -61,6 +61,7 @@ public class SplashScreen extends Activity {
                         AddNoteActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                //finish activity so user can't navigate back to splash
                 SplashScreen.this.finish();
             }
 

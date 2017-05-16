@@ -128,6 +128,36 @@
 
         </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab1"
+        app:fabSize="normal"
+        android:scaleType="fitXY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="4dp"
+        android:src="@mipmap/new_note"
+        app:layout_anchorGravity="bottom|right|end"
+        app:backgroundTint="@color/light_grey"
+        app:rippleColor="#DFffffff"
+        android:padding="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab2"
+        app:fabSize="normal"
+        android:scaleType="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="4dp"
+        android:src="@mipmap/add_existing"
+        app:layout_anchorGravity="bottom|right|end"
+        app:backgroundTint="@color/light_grey"
+        app:rippleColor="#DFffffff" />
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"

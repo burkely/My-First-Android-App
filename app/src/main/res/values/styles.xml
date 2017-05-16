@@ -41,10 +41,10 @@
     <style
         name="MyActionBar"
         parent="Widget.AppCompat.Light.ActionBar">
-        <item name="android:background">@color/actionbar_background</item>
+        <item name="android:background">@color/light_grey</item>
 
         <!-- Support library compatibility -->
-        <item name="background">@color/actionbar_background</item>
+        <item name="background">@color/light_grey</item>
         <item name="android:minWidth">0dp</item>
         <!--Using build tool 21.1.2, it doesn't allow giving color directly to themes.
         You have to give it using @color or @drawable. –  Adil Soomro 2 days ago-->
