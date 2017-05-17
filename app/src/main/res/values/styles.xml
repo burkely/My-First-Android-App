@@ -3,21 +3,20 @@
     <!-- Base application theme. -->
     <style
         name="AppTheme"
-        parent="Theme.AppCompat.Light">
+        parent="Base.Theme.AppCompat.Light">
 
         <!-- Customize your theme here.-->
-        <item name="android:actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionButtonStyle">@style/MyActionButton</item>
         <item name="android:editTextStyle">@style/EditTextStyle</item>
         <item name="android:textViewStyle">@style/TextStyle</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
 
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
-        <item name="actionOverflowButtonStyle">@style/OverFlowIcon</item>
         <item name="actionButtonStyle">@style/MyActionButton</item>
         <item name="editTextStyle">@style/EditTextStyle</item>
-        <item name="colorAccent">@color/edittext_line</item>
+        <item name="colorAccent">@color/app_blue</item>
     </style>
 
     <!-- EditText/font Style -->
@@ -34,29 +33,22 @@
     <!-- Action Button Style -->
     <style name="MyActionButton" parent="Widget.AppCompat.Light.ActionButton">
         <item name="android:minWidth">1dp</item>
-        <item name="android:padding">2dp</item>
     </style>
 
     <!-- ActionBar styles-->
     <style
         name="MyActionBar"
         parent="Widget.AppCompat.Light.ActionBar">
-        <item name="android:background">@color/light_grey</item>
+        <item name="android:background">@color/app_blue</item>
 
         <!-- Support library compatibility -->
-        <item name="background">@color/light_grey</item>
+        <item name="background">@color/app_blue</item>
         <item name="android:minWidth">0dp</item>
+
         <!--Using build tool 21.1.2, it doesn't allow giving color directly to themes.
-        You have to give it using @color or @drawable. –  Adil Soomro 2 days ago-->
+        You have to give it using @color or @drawable. -->
     </style>
 
     <!-- Custom Overflow Icon -->
-    <style
-        name="OverFlowIcon"
-        parent="@android:style/Widget.Holo.ActionButton.Overflow">
-        <item name="android:minWidth">0dp</item>
-        <item name="android:padding">6dp</item>
-        <item name="android:src">@mipmap/overflow</item>
-    </style>
 
 </resources>

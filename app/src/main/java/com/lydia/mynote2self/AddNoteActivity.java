@@ -30,7 +30,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.home_icon);
+        getSupportActionBar().setLogo(R.mipmap.ele_actionbar_icon);
     }
 
     @Override
