@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bmenu_add"
+        android:title="@string/add_bnav"
+        android:icon="@mipmap/focused_addnote"
+        android:enabled="true"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bmenu_see"
+        android:title="@string/see_bnav"
+        android:icon="@mipmap/focused_seenotes"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/bmenu_important"
+        android:title="@string/important_bnav"
+        android:icon="@mipmap/focusesd_star"
+        android:enabled="true"
+        app:showAsAction="ifRoom"/>
+
+</menu>

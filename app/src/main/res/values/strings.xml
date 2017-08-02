@@ -15,7 +15,14 @@
     <string name="delete_all_notes">Delete ALL! </string>
     <string name="delete_one_note">Delete Item</string>>
     <string name="title_activity_add_notes">AddNotesActivity</string>
-    
+
+    <!--SplashScreen srings -->
     <string name="made_by">Designed &amp; Engineered by Lydia Burke</string>
+
+    <!-- bottom nav bar strings -->
+    <string name="recent_bnav">Recent</string>
+    <string name="important_bnav">Important</string>
+    <string name="add_bnav">Add Notes</string>
+    <string name="see_bnav">See Notes</string>
    
 </resources>
