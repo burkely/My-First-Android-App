@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 
 
 public class AddNoteActivity extends AppCompatActivity {
@@ -23,12 +30,38 @@ public class AddNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
-        //get rid of the title
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        CheckBox toggleImportant = (CheckBox) findViewById(R.id.important_radioButton);
+        toggleImportant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox rv = (CheckBox) v.findViewById(R.id.important_radioButton);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.home_icon);
+                if(rv.isChecked()){
+                    rv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.grey_black));
+                }else{
+                    rv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.light_grey));
+                }
+                //rv.toggle();
+            }});
+
+
+
+        ImageButton save = (ImageButton) findViewById(R.id.add_note_button);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveMessage(v);
+            }
+        });
+
+        RelativeLayout see_all_button = (RelativeLayout) findViewById(R.id.see_all_button);
+        see_all_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddNoteActivity.this, DisplayNotesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -63,8 +96,6 @@ public class AddNoteActivity extends AppCompatActivity {
         //Assign the text to a local message variable
         String newNote = saveText.getText().toString().trim();
 
-        //clear the input for more notes
-        saveText.getText().clear();
 
         if ((newNote.length() != 0) && (newNote != " ")) {
             //find/create our SP where our notes are saved/will be saved
@@ -82,6 +113,9 @@ public class AddNoteActivity extends AppCompatActivity {
             //and we add to our list so we dont have to access/load SP moving between activities
             MainApp myApplication = (MainApp) getApplicationContext();
             myApplication.addNote((newNote));
+
+            //clear the input for more notes
+            saveText.getText().clear();
         }
     }
 

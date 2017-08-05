@@ -3,91 +3,79 @@ package com.lydia.mynote2self;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import static android.support.v7.recyclerview.R.attr.layoutManager;
 
-public class DisplayNotesActivity extends AppCompatActivity {
+public class DisplayNotesActivity extends AppCompatActivity implements recyclerClickListener {
 
-
-    private ArrayAdapter<String> adapter;
     final Context context = this;
 
-    ListView lv;
+    private RecyclerView rv;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_notes);
 
-            //disable the app icon as the Up (back) button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //disable the app icon as the Up (back) button
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //get rid of the title
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         //set logo instead
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.home_icon);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+        //getSupportActionBar().setLogo(R.mipmap.home_icon);
 
         //access notes and methods from our globalApp Class
         final MainApp myApplication = (MainApp) getApplicationContext();
         //populate adapater with our shared array in MainApp
         //NOTE: simple list item 1 = Android predefined TextView resource id
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myApplication.getEntryList());
-
-        lv = (ListView) findViewById(R.id.listView1);
-        lv.setAdapter(adapter);
-
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> a, View v, final int position, long id) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(context);
-
-                adb.setTitle("Delete Item?");
-
-                adb.setMessage("Are you sure you want to delete this note? ");
-
-                adb.setNegativeButton("Cancel", null);
-
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //position gives position of item view in adapter, will happen to  equal id also as the first row is also the first item in the list view
-                        final int index = position;
-                        myApplication.clearItem(index);
-
-                        //repopulate listview adpater with item removed
-                        adapter.notifyDataSetChanged();
 
 
-                    }
-                });
+        rv = (RecyclerView) findViewById(R.id.recyclerViewNotes);
 
-                // create alert dialog
-                AlertDialog alertDialog = adb.create();
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(mLayoutManager);
 
-                // show it
-                alertDialog.show();
 
-                /**the View hierarchy in Android is represented by a tree. When you
-                return true from the onItemLongClick() - it means that the View that
-                currently received the event is the true event receiver and the event
-                should not be propagated to the other Views in the tree; when you
-                return false - you let
-                the event be passed to the other Views that may consume it.**/
+        adapter = new ShowNotesAdapter(myApplication.getEntryList());
 
-                return true;
+        rv.setAdapter(adapter);
+
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
+                mLayoutManager.getOrientation());
+
+        dividerItemDecoration.setDrawable(getDrawable(R.drawable.recycler_view_divider));
+
+        rv.addItemDecoration(dividerItemDecoration);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Click action
+                Intent intent = new Intent(DisplayNotesActivity.this, AddNoteActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -117,9 +105,6 @@ public class DisplayNotesActivity extends AppCompatActivity {
                 deleteAll();
                 break;
 
-            case R.id.add_note:
-                NavUtils.navigateUpFromSameTask(this);
-                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -170,8 +155,8 @@ public class DisplayNotesActivity extends AppCompatActivity {
                         MainApp myApplication = (MainApp) getApplicationContext();
                         myApplication.clearList();
 
-                        ListView listView1 = (ListView) findViewById(R.id.listView1);
-                        listView1.setAdapter(null);
+                        //ListView listView1 = (ListView) findViewById(R.id.listView1);
+                        //listView1.setAdapter(null);
                     }
                 })
                 .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
@@ -187,5 +172,23 @@ public class DisplayNotesActivity extends AppCompatActivity {
         // show it
         alertDialog.show();
     } //end of deleteAll()
+
+
+
+
+
+
+    @Override
+    public void setFavorite(int position) {
+        //Toast.makme(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void selectNote(int position) {
+        //Toast.makme(), Toast.LENGTH_SHORT).show();
+    }
+
+
+
 
 } // end of class

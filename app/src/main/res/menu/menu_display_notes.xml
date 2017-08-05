@@ -4,12 +4,6 @@
     tools:context="com.lydia.mynote2self.DisplayNotesActivity">
 
     <item
-        android:id="@+id/add_note"
-        android:icon="@mipmap/add_note"
-        android:title=""
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/deleteOne"
         android:title="Delete Item"
         android:orderInCategory="80"

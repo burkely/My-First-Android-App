@@ -1,32 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.88">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewNotes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:paddingBottom="5dp"/>
 
-        <ListView
-            android:id="@+id/listView1"
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent"
-            android:listSelector="#1E052E88"
-            android:divider="#10000690"
-            android:dividerHeight="0.1px"
-            android:choiceMode="singleChoice"
-            />
-    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:scaleType="fitXY"
+        android:tint="@android:color/white"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/app_blue"
+        app:elevation="4dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/recyclerViewNotes"
+        app:layout_anchorGravity="bottom|right|end"
+        app:rippleColor="#DFffffff" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.12"
-        android:background="@color/bottomBar"
-        >
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
