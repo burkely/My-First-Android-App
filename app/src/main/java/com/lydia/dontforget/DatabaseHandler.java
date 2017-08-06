@@ -15,7 +15,9 @@ import java.util.List;
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-
+    // make sure we only have on instance to avoid leaks/no writes
+    private static DatabaseHandler mInstance = null;
+    private Context mCtx;
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -28,10 +30,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String NOTE_ENTRY = "note_entry";
     public static final String IMPORTANT = "important";
 
+    public static DatabaseHandler getInstance(Context ctx) {
+        /**
+         * use the application context as suggested by CommonsWare.
+         * this will ensure that you dont accidentally leak an Activitys
+         * context (see this article for more information:
+         * http://developer.android.com/resources/articles/avoiding-memory-leaks.html)
+         */
+        if (mInstance == null) {
+            mInstance = new DatabaseHandler(ctx.getApplicationContext());
+        }
+        return mInstance;
+    }
+
 
     // No default constructor, must explicitly define db name & version
-    public DatabaseHandler(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    private DatabaseHandler(Context ctx) {
+        super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mCtx = ctx;
     }
 
     @Override

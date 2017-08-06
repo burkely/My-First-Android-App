@@ -1,13 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.lydia.dontforget.DisplayNotesActivity">
-
-    <item
-        android:id="@+id/add_note"
-        android:icon="@mipmap/add_note"
-        android:title=""
-        app:showAsAction="always" />
+    tools:context="com.lydia.dontforget.SeeListActivity">
 
     <item
         android:id="@+id/deleteOne"

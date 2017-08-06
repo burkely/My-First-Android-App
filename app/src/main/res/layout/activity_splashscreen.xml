@@ -12,10 +12,12 @@
         android:layout_alignParentTop="true">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="75dp"
             android:id="@+id/splash"
-            android:background="@mipmap/ele_anim_120dpi" />
+            android:src="@drawable/large_light_blue_ele_svg" />
+
     </LinearLayout>
 
 
@@ -28,6 +30,6 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:textSize="18sp"
-        android:paddingBottom="10sp" />
+        android:paddingBottom="15sp" />
 
 </RelativeLayout>
