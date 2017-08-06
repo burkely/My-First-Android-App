@@ -7,19 +7,6 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
-    <TextView
-        android:id="@+id/note_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textSize="18sp"
-        android:textColor="#00002F"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/fav_note"
-
-        android:maxLines="1"
-        android:ellipsize="end"/>
-
     <ImageButton
         android:id="@+id/fav_note"
         android:layout_width="wrap_content"
@@ -34,7 +21,19 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:src="@android:drawable/star_off"
+        android:src="@drawable/unfocused_star"
         android:tag="star_off"/>
+
+    <TextView
+        android:id="@+id/note_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:textColor="#00002F"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/fav_note"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import java.util.List;
 public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.ViewHolder> {
 
     private List<Note> mDataset;
+    private RecyclerClickListener clickInterface;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -29,7 +30,8 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.View
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ShowNotesAdapter(List<Note> myDataset) {
+    public ShowNotesAdapter(RecyclerClickListener listener, List<Note> myDataset) {
+        clickInterface = listener;
         mDataset = myDataset;
     }
 
@@ -47,24 +49,30 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.View
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset.get(position).getEntry());
+
+        if(mDataset.get(position).getImp()==1)
+            holder.mStar.setImageResource(R.drawable.focused_star);
+        else
+            holder.mStar.setImageResource(R.drawable.unfocused_star);
+
 
         holder.mStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ImageButton star = (ImageButton) v.findViewById(R.id.fav_note);
-                if(star.getTag() == "star_off"){
-                    star.setTag("star_on");
-                    star.setImageResource(android.R.drawable.star_on);
+
+                if(mDataset.get(position).getImp()==1){
+                    star.setImageResource(R.drawable.unfocused_star);
                 }
                 else{
-                    star.setTag("star_off");
-                    star.setImageResource(android.R.drawable.star_off);
+                    star.setImageResource(R.drawable.focused_star);
                 }
 
+                clickInterface.toggleImportant(mDataset.get(position));
             }
         });
 

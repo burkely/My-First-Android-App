@@ -181,13 +181,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // toggle important status
     public void toggleImportantDB(Note note) {
+        Log.d("Tag1", "toggling note importance");
 
         SQLiteDatabase db = this.getWritableDatabase();
+
+        Log.d("tag2", "NB status: " + Integer.toString(note.getImp()));
 
         if(note._important==0)
             note.setImp(1);
         else
             note.setImp(0);
+
         updateNoteDB(note);
 
     }

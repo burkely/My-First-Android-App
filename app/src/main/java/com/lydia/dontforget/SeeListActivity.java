@@ -14,7 +14,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public class SeeListActivity extends AppCompatActivity implements recyclerClickListener {
+public class SeeListActivity extends AppCompatActivity implements RecyclerClickListener {
 
     private RecyclerView rv;
     private RecyclerView.Adapter adapter;
@@ -34,7 +34,7 @@ public class SeeListActivity extends AppCompatActivity implements recyclerClickL
         rv.setLayoutManager(mLayoutManager);
 
         dbHandler = DatabaseHandler.getInstance(context);
-        adapter = new ShowNotesAdapter(dbHandler.getAllNotesDB());
+        adapter = new ShowNotesAdapter(this, dbHandler.getAllNotesDB());
 
         rv.setAdapter(adapter);
 
@@ -116,8 +116,8 @@ public class SeeListActivity extends AppCompatActivity implements recyclerClickL
 
 
     @Override
-    public void setFavorite(int position) {
-        //Toast.makme(), Toast.LENGTH_SHORT).show();
+    public void toggleImportant(Note note) {
+        dbHandler.toggleImportantDB(note);
     }
 
     @Override

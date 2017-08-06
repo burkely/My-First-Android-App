@@ -134,12 +134,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="22dp" />
 
-
-
     <!-- Using the plus sign is necessary only when specifying
     a new resource ID and not needed for concrete resources
     such as strings or layouts.  -->
-
-
 
 </RelativeLayout>
