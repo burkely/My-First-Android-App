@@ -59,6 +59,7 @@ public class AddEntryActivity extends AppCompatActivity {
 
                     //clear the input for more notes
                     textBox.getText().clear();
+                    cBox.setChecked(false);
                 }
             }
         });

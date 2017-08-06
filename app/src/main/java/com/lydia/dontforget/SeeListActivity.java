@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +15,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.List;
+
 public class SeeListActivity extends AppCompatActivity implements RecyclerClickListener {
 
     private RecyclerView rv;
     private RecyclerView.Adapter adapter;
+    private List<Note> recyclerList;
 
     DatabaseHandler dbHandler;
     Context context;
@@ -27,6 +31,8 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_list);
 
+        context = this;
+
         rv = (RecyclerView) findViewById(R.id.recyclerViewNotes);
 
         // use a linear layout manager
@@ -34,7 +40,8 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
         rv.setLayoutManager(mLayoutManager);
 
         dbHandler = DatabaseHandler.getInstance(context);
-        adapter = new ShowNotesAdapter(this, dbHandler.getAllNotesDB());
+        recyclerList = dbHandler.getAllNotesDB();
+        adapter = new ShowNotesAdapter(this, recyclerList);
 
         rv.setAdapter(adapter);
 
@@ -80,12 +87,46 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
                 break;
 
             case R.id.deleteAll:
-                //deleteAll();
+                deleteAll();
                 break;
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteAll() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title of alert
+        alertDialogBuilder.setTitle("HOLD UP!");
+
+        alertDialogBuilder
+                // set dialog message
+                .setMessage("Are you SURE you want to delete all of these important notes?")
+                //sets whether this dialog is cancelable with the back button
+                .setCancelable(false)
+                .setPositiveButton("Yes, definitely", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dbHandler.deleteAllNotesDB();
+                        recyclerList.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
     }
 
 

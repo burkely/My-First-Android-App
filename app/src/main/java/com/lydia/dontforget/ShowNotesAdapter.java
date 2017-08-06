@@ -76,6 +76,14 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.View
             }
         });
 
+        holder.mTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageButton star = (ImageButton) v.findViewById(R.id.fav_note);
+
+            }
+        });
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
