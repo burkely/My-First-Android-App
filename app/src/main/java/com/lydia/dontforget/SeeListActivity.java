@@ -3,9 +3,10 @@ package com.lydia.dontforget;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,14 +15,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SeeListActivity extends AppCompatActivity implements RecyclerClickListener {
+import static android.R.color.holo_blue_light;
+
+public class SeeListActivity extends AppCompatActivity implements ViewHolderClickListener {
 
     private RecyclerView rv;
-    private RecyclerView.Adapter adapter;
+    private ShowNotesAdapter myAdapter;
     private List<Note> recyclerList;
+    private Menu menu;
+    private int itemsSelected;
 
     DatabaseHandler dbHandler;
     Context context;
@@ -32,6 +40,7 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
         setContentView(R.layout.activity_see_list);
 
         context = this;
+        itemsSelected = 0;
 
         rv = (RecyclerView) findViewById(R.id.recyclerViewNotes);
 
@@ -41,17 +50,9 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
 
         dbHandler = DatabaseHandler.getInstance(context);
         recyclerList = dbHandler.getAllNotesDB();
-        adapter = new ShowNotesAdapter(this, recyclerList);
+        myAdapter = new ShowNotesAdapter(this, recyclerList, this);
 
-        rv.setAdapter(adapter);
-
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),
-                mLayoutManager.getOrientation());
-
-        dividerItemDecoration.setDrawable(getDrawable(R.drawable.recycler_view_divider));
-
-        rv.addItemDecoration(dividerItemDecoration);
+        rv.setAdapter(myAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -71,6 +72,7 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_see_list, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -83,7 +85,7 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
 
         switch (id) {
             case R.id.deleteOne:
-                howToDeleteItem();
+                //howToDeleteItem();
                 break;
 
             case R.id.deleteAll:
@@ -94,6 +96,51 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    @Override
+    public void toggleImportant(View v, int position) {
+        // Star icon is clicked,
+        // mark the message as important
+        ImageButton mStar = (ImageButton) v.findViewById(R.id.fav_note);
+
+        Note note = recyclerList.get(position);
+        dbHandler.toggleImportantDB(note);
+
+        if(note.getImp()==1)
+            mStar.setImageResource(R.drawable.focused_star);
+        else
+            mStar.setImageResource(R.drawable.unfocused_star);
+    }
+
+    @Override
+    public void ToggleRowSelect(View v, int position) {
+
+        RelativeLayout row = (RelativeLayout) v.findViewById(R.id.row);
+
+        Note note = recyclerList.get(position);
+
+        if(note.getSelected()== 1) {
+            row.setBackgroundColor(Color.WHITE);
+            note.setSelected(0);
+            itemsSelected--;
+
+        }
+        else {
+            row.setBackgroundColor(Color.LTGRAY);
+            note.setSelected(1);
+            itemsSelected++;
+        }
+
+        MenuItem item = menu.findItem(R.id.delete_ic);
+        if (itemsSelected != 0) {
+            item.setVisible(true);
+        }else
+            item.setVisible(false);
+
+    }
+
 
     public void deleteAll() {
 
@@ -112,7 +159,7 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
                     public void onClick(DialogInterface dialog, int id) {
                         dbHandler.deleteAllNotesDB();
                         recyclerList.clear();
-                        adapter.notifyDataSetChanged();
+                        myAdapter.notifyDataSetChanged();
                     }
                 })
                 .setNegativeButton("No Way Jose", new DialogInterface.OnClickListener() {
@@ -154,16 +201,5 @@ public class SeeListActivity extends AppCompatActivity implements RecyclerClickL
         alertDialog.show();
     } //end of deleteItem()
 
-
-
-    @Override
-    public void toggleImportant(Note note) {
-        dbHandler.toggleImportantDB(note);
-    }
-
-    @Override
-    public void selectNote(int position) {
-        //Toast.makme(), Toast.LENGTH_SHORT).show();
-    }
 
 }

@@ -11,23 +11,19 @@ public class Note {
     String _label;
     String _note;
     int _important;
+    int _selected;
 
     // Empty constructor
     public Note(){}
 
-    // constructor
-    public Note(int id, String entry, int imp){
-        this._id = id;
-        this._note = entry;
-        this._important = imp;
-    }
 
     // constructor
-    public Note(int id, String label, String entry, int imp){
+    public Note(int id, String label, String entry, int imp, int selected){
         this._id = id;
         this._label = label;
         this._note = entry;
         this._important = imp;
+        this._selected = selected;
     }
 
     // getting ID
@@ -70,6 +66,15 @@ public class Note {
         this._important = imp;
     }
 
+    // check if selected
+    public int getSelected(){
+        return this._selected;
+    }
+
+    // set selected
+    public void setSelected(int selected){
+        this._selected = selected;
+    }
 
 
 }

@@ -99,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
         Note note = new Note(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
+                cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)));
 
         // return note
         return note;

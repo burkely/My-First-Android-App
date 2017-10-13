@@ -4,6 +4,13 @@
     tools:context="com.lydia.dontforget.SeeListActivity">
 
     <item
+        android:id="@+id/delete_ic"
+        android:icon="@drawable/delete_icon"
+        android:orderInCategory="70"
+        app:showAsAction="always"
+        android:visible="false" />
+
+    <item
         android:id="@+id/deleteOne"
         android:title="Delete Item"
         android:orderInCategory="80"

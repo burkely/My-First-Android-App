@@ -60,6 +60,7 @@ public class AddEntryActivity extends AppCompatActivity {
                     //clear the input for more notes
                     textBox.getText().clear();
                     cBox.setChecked(false);
+                    cBox.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.light_grey));
                 }
             }
         });
