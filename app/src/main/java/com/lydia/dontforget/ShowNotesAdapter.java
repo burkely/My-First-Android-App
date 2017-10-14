@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MyShowNotesViewHolder> {
@@ -55,8 +56,6 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
     }
 
 
-
-
     public class MyShowNotesViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener{
 
@@ -97,8 +96,17 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
 
 
 
+    void deleteAdapterItems(List<Note> list){
+    List<Note> newList = new ArrayList<>();
+        
+        for(int i=0; list.get(i)!= null ; i++){
+            if(list.getAdapterPosition(i).getSelected() != 1){
+                newList.add(list.get(i));
+            }
+        }
 
-
+        (holder.getAdapterPosition()
+    }
 
 
 }

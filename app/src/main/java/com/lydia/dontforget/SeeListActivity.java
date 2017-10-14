@@ -84,8 +84,9 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.deleteOne:
-                //howToDeleteItem();
+            case R.id.delete_ic:
+                deleteItems();
+                myAdapter.notifyDataSetChanged();
                 break;
 
             case R.id.deleteAll:
@@ -96,8 +97,6 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     @Override
     public void toggleImportant(View v, int position) {
@@ -152,7 +151,7 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
 
         alertDialogBuilder
                 // set dialog message
-                .setMessage("Are you SURE you want to delete all of these important notes?")
+                .setMessage("Are you SURE you want to delete ALL of these important notes?")
                 //sets whether this dialog is cancelable with the back button
                 .setCancelable(false)
                 .setPositiveButton("Yes, definitely", new DialogInterface.OnClickListener() {
@@ -169,6 +168,83 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
                         dialog.cancel();
                     }
                 });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
+
+
+    public void deleteItems() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        if(itemsSelected <= 0){
+            // set title of alert
+            alertDialogBuilder.setTitle("Delete Item?");
+            alertDialogBuilder
+                    // set dialog message
+                    .setMessage("Whoops no items to delete!")
+                    //sets whether this dialog is cancelable with the back button
+                    .setCancelable(true)
+                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+
+        }
+        else if(itemsSelected == 1){
+            // set title of alert
+            alertDialogBuilder.setTitle("Delete Item");
+            alertDialogBuilder
+                    // set dialog message
+                    .setMessage("Are you sure you want to delete this note?")
+                    //sets whether this dialog is cancelable with the back button
+                    .setCancelable(false)
+                    .setPositiveButton("Yep. Do it", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dbHandler.deleteNoteDB(recyclerList);
+                            myAdapter.deleteAdapterItems(recyclerList);
+                            myAdapter.notifyDataSetChanged();
+                        }
+                    })
+                    .setNegativeButton("No, thumb slip", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+        }else{
+            // set title of alert
+            alertDialogBuilder.setTitle("Delete Items");
+            alertDialogBuilder
+                    // set dialog message
+                    .setMessage("Are you sure you want to delete these note?")
+                    //sets whether this dialog is cancelable with the back button
+                    .setCancelable(false)
+                    .setPositiveButton("Ah g'wan", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dbHandler.deleteNoteDB(recyclerList);
+                            myAdapter.deleteAdapterItems(recyclerList);
+                            myAdapter.notifyDataSetChanged();
+                        }
+                    })
+                    .setNegativeButton("Nah", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
+        }
+
+
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();

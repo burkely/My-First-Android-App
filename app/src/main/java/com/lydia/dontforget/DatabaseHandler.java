@@ -170,8 +170,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int size = notes.size();
 
         for(int i=0; i<size; i++){
-            db.delete(TABLE_NAME, PRIMARY_ID + " = ?",
-                    new String[] { String.valueOf(notes.get(i).getID()) });
+            if(notes.get(i).getSelected() == 1){
+                db.delete(TABLE_NAME, PRIMARY_ID + " = ?",
+                        new String[] { String.valueOf(notes.get(i).getID()) });
+            }
         }
     }
 
