@@ -1,14 +1,16 @@
 package com.lydia.dontforget;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MyShowNotesViewHolder> {
@@ -38,8 +40,6 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyShowNotesViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
         holder.mTextView.setText(mDataset.get(position).getEntry());
 
@@ -47,6 +47,14 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
             holder.mStar.setImageResource(R.drawable.focused_star);
         else
             holder.mStar.setImageResource(R.drawable.unfocused_star);
+
+        if(mDataset.get(position).getSelected()==1){
+            holder.row.setBackgroundColor(Color.LTGRAY);
+        }else
+            holder.row.setBackgroundColor(
+                ResourcesCompat.getColor(context.getResources(),
+                                R.color.default_cardview_bg, context.getTheme()));
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -61,12 +69,14 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
 
         public TextView mTextView;
         public ImageButton mStar;
+        public RelativeLayout row;
 
         public MyShowNotesViewHolder(final View itemView) {
             super(itemView);
 
             mTextView = (TextView) itemView.findViewById(R.id.note_entry);
             mStar = (ImageButton) itemView.findViewById(R.id.fav_note);
+            row = (RelativeLayout) itemView.findViewById(R.id.row);
 
             itemView.setOnClickListener(this);
             mStar.setOnClickListener(this);
@@ -94,19 +104,6 @@ public class ShowNotesAdapter extends RecyclerView.Adapter<ShowNotesAdapter.MySh
         }
     }
 
-
-
-    void deleteAdapterItems(List<Note> list){
-    List<Note> newList = new ArrayList<>();
-        
-        for(int i=0; list.get(i)!= null ; i++){
-            if(list.getAdapterPosition(i).getSelected() != 1){
-                newList.add(list.get(i));
-            }
-        }
-
-        (holder.getAdapterPosition()
-    }
 
 
 }

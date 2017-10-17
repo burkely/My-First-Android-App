@@ -4,32 +4,31 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.color.holo_blue_light;
 
 public class SeeListActivity extends AppCompatActivity implements ViewHolderClickListener {
 
-    private RecyclerView rv;
+    private RecyclerView mRecyclerView;
     private ShowNotesAdapter myAdapter;
     private List<Note> recyclerList;
     private Menu menu;
     private int itemsSelected;
+    private static Bundle mBundleRecyclerViewState;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
 
     DatabaseHandler dbHandler;
     Context context;
@@ -42,17 +41,17 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
         context = this;
         itemsSelected = 0;
 
-        rv = (RecyclerView) findViewById(R.id.recyclerViewNotes);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewNotes);
 
         // use a linear layout manager
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         dbHandler = DatabaseHandler.getInstance(context);
         recyclerList = dbHandler.getAllNotesDB();
         myAdapter = new ShowNotesAdapter(this, recyclerList, this);
 
-        rv.setAdapter(myAdapter);
+        mRecyclerView.setAdapter(myAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -67,6 +66,28 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
 
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+
+        // save RecyclerView state
+        mBundleRecyclerViewState = new Bundle();
+        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE, listState);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        // restore RecyclerView state
+        if (mBundleRecyclerViewState != null) {
+            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +107,6 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
         switch (id) {
             case R.id.delete_ic:
                 deleteItems();
-                myAdapter.notifyDataSetChanged();
                 break;
 
             case R.id.deleteAll:
@@ -121,7 +141,9 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
         Note note = recyclerList.get(position);
 
         if(note.getSelected()== 1) {
-            row.setBackgroundColor(Color.WHITE);
+            row.setBackgroundColor(ResourcesCompat.getColor(
+                    getResources(), R.color.default_cardview_bg, getTheme()));
+
             note.setSelected(0);
             itemsSelected--;
 
@@ -132,14 +154,16 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
             itemsSelected++;
         }
 
+        toggleDeleteOption();
+    }
+
+    public void toggleDeleteOption(){
         MenuItem item = menu.findItem(R.id.delete_ic);
         if (itemsSelected != 0) {
             item.setVisible(true);
         }else
             item.setVisible(false);
-
     }
-
 
     public void deleteAll() {
 
@@ -196,8 +220,8 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
                             dialog.cancel();
                         }
                     });
-
         }
+
         else if(itemsSelected == 1){
             // set title of alert
             alertDialogBuilder.setTitle("Delete Item");
@@ -209,8 +233,9 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
                     .setPositiveButton("Yep. Do it", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dbHandler.deleteNoteDB(recyclerList);
-                            myAdapter.deleteAdapterItems(recyclerList);
-                            myAdapter.notifyDataSetChanged();
+                            deleteAdapterItems(recyclerList);
+                            itemsSelected = 0;
+                            toggleDeleteOption();
                         }
                     })
                     .setNegativeButton("No, thumb slip", new DialogInterface.OnClickListener() {
@@ -231,8 +256,9 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
                     .setPositiveButton("Ah g'wan", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dbHandler.deleteNoteDB(recyclerList);
-                            myAdapter.deleteAdapterItems(recyclerList);
-                            myAdapter.notifyDataSetChanged();
+                            deleteAdapterItems(recyclerList);
+                            itemsSelected = 0;
+                            toggleDeleteOption();
                         }
                     })
                     .setNegativeButton("Nah", new DialogInterface.OnClickListener() {
@@ -244,12 +270,29 @@ public class SeeListActivity extends AppCompatActivity implements ViewHolderClic
                     });
         }
 
-
-
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
         // show it
         alertDialog.show();
+    }
+
+    void deleteAdapterItems(List<Note> list) {
+        int size = list.size();
+
+        for(int i = 0; i<size; i++){
+            if(list.get(i).getSelected()==1){
+                list.remove(i);
+                size--;
+                i--;
+
+                myAdapter.notifyItemRemoved(i);
+                myAdapter.notifyItemRangeChanged(i, list.size());
+            }
+            myAdapter.notifyDataSetChanged();
+        }
+
+
+
     }
 
 

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="unfocused_white_bnav">#F0F0F0</color>
-    <color name="unfocused_icon_grey">#7575BF</color>
     <color name="white">#FFFFFF</color>
     <color name="actionbar_background">#CCCCCC</color>
     <color name="recycleview_divider">#CCCCFF</color>
