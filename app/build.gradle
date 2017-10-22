@@ -4,11 +4,11 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     defaultConfig {
-        applicationId 'com.lydia.dontforget'
+        applicationId 'com.lydia.mynote2self'
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 2
-        versionName '2.0'
+        versionName '1.1'
     }
     buildTypes {
         release {
